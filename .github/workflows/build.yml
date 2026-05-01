@@ -14,10 +14,10 @@ jobs:
       - name: Build ESPHome
         run: esphome compile xh-s3e-ai.yaml
 
-      - name: Find firmware
+      - name: Find firmware files
         run: find .esphome/build -name "*.bin" | sort
 
-      - name: Upload firmware
+      - name: Upload factory firmware
         uses: actions/upload-artifact@v4
         with:
           name: firmware
