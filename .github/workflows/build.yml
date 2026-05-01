@@ -9,20 +9,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install ESPHome
-        run: |
-          pip install esphome
+        run: pip install esphome
 
       - name: Build ESPHome
-        run: |
-          esphome compile xh-s3e-ai.yaml
-          ls -la
-          ls -la .esphome/ || true
-          ls -la .esphome/build/ || true
+        run: esphome compile xh-s3e-ai.yaml
 
-      - name: Upload entire workspace
-        if: always()
+      - name: Find firmware
+        run: find .esphome/build -name "*.bin" | sort
+
+      - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: .
-          retention-days: 1
+          path: .esphome/build/xh-s3e-ai/.pioenvs/xh-s3e-ai/firmware.factory.bin
+          retention-days: 7
