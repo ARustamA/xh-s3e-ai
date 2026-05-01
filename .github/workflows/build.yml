@@ -15,16 +15,14 @@ jobs:
       - name: Build ESPHome
         run: |
           esphome compile xh-s3e-ai.yaml
+          ls -la
+          ls -la .esphome/ || true
+          ls -la .esphome/build/ || true
 
-      - name: List build files
-        run: |
-          find .esphome -type f -name "*.bin" 2>/dev/null || true
-
-      - name: Upload firmware
+      - name: Upload entire workspace
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: |
-            .esphome/
+          path: .
           retention-days: 1
