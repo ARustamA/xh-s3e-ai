@@ -8,7 +8,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install ESPHome
+        run: |
+          pip install esphome
+
       - name: Build ESPHome
-        uses: esphome/build-action@v3
+        run: |
+          esphome compile xh-s3e-ai.yaml
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
         with:
-          yaml-file: xh-s3e-ai.yaml
+          name: firmware
+          path: .esphome/build/xh-s3e-ai/.pioenvs/xh-s3e-ai/firmware.bin
+          retention-days: 1
