@@ -16,9 +16,18 @@ jobs:
         run: |
           esphome compile xh-s3e-ai.yaml
 
+      - name: Find firmware
+        id: find_firmware
+        run: |
+          find .esphome -name "*.bin" -type f 2>/dev/null || true
+          ls -la .esphome/build/xh-s3e-ai/ 2>/dev/null || true
+
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: .esphome/build/xh-s3e-ai/.pioenvs/xh-s3e-ai/firmware.bin
+          path: |
+            .esphome/build/xh-s3e-ai/firmware.bin
+            .esphome/build/xh-s3e-ai/partitions.bin
+            .esphome/build/xh-s3e-ai/bootloader.bin
           retention-days: 1
