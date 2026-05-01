@@ -1,0 +1,24 @@
+name: Build ESPHome
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ESPHome
+        uses: esphome/setup-action@v1
+        with:
+          yaml-file: xh-s3e-ai.yaml
+
+      - name: Build firmware
+        run: esphome compile xh-s3e-ai.yaml
+
+      - name: Upload firmware artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ github.run_number }}
+          path: .esphome/build/xh-s3e-ai/.pioenvs/xh-s3e-ai/firmware.bin
+          retention-days: 5
