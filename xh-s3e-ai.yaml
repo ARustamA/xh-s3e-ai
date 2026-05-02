@@ -67,7 +67,7 @@ media_player:
 micro_wake_word:
   models:
     - model: okay_nabu
-  model_repository: esphome
+
 
 # ===== VOICE ASSISTANT =====
 voice_assistant:
