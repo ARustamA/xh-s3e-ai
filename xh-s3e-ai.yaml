@@ -54,20 +54,6 @@ microphone:
     bits_per_sample: 16bit
     channel: left
 
-speaker:
-  - platform: i2s_audio
-    id: spk
-    i2s_audio_id: i2s_bus
-    i2s_dout_pin: GPIO17
-    dac_type: external
-
-media_player:
-  - platform: speaker
-    name: "${friendly_name}"
-    id: mp
-    announcement_pipeline:
-      speaker: spk
-
 micro_wake_word:
   models:
     - model: okay_nabu
@@ -75,7 +61,6 @@ micro_wake_word:
 voice_assistant:
   id: va
   microphone: mic
-  media_player: mp
   use_wake_word: true
   noise_suppression_level: 2
   auto_gain: 31dBFS
