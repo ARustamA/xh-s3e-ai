@@ -11,7 +11,7 @@ esphome:
   on_boot:
     priority: -100
     then:
-      - micro_wake_word.start:
+      - voice_assistant.start_continuous:
 
 esp32:
   board: esp32-s3-devkitc-1
@@ -87,6 +87,8 @@ voice_assistant:
     - light.turn_on: led
   on_end:
     - light.turn_off: led
+  on_idle:
+    - micro_wake_word.start:
 
 light:
   - platform: binary
