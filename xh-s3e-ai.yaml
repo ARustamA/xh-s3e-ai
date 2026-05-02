@@ -25,6 +25,7 @@ psram:
 
 logger:
   level: DEBUG
+  level: VERY_VERBOSE
 
 wifi:
   ssid: !secret wifi_ssid
@@ -44,18 +45,18 @@ ota:
 i2s_audio:
   - id: i2s_bus
     i2s_lrclk_pin: GPIO41
-    i2s_bclk_pin: GPIO38
+# i2s_audio:
+#   - id: i2s_bus
+#     i2s_lrclk_pin: GPIO41
+#     i2s_bclk_pin: GPIO38
 
 microphone:
   - platform: i2s_audio
     id: mic
     i2s_audio_id: i2s_bus
     i2s_din_pin: GPIO42
-    adc_type: external
     pdm: true
-    sample_rate: 16000
-    bits_per_sample: 16bit
-    channel: left 
+    channel: left
 
 speaker:
   - platform: i2s_audio
