@@ -8,15 +8,16 @@ esphome:
   platformio_options:
     board_build.flash_mode: dio
     board_build.partitions: partitions.csv
+  on_boot:
+    priority: -100
+    then:
+      - micro_wake_word.start:
 
 esp32:
   board: esp32-s3-devkitc-1
   variant: ESP32S3
   framework:
     type: esp-idf
-    sdkconfig_options:
-      CONFIG_ESPTOOLPY_FLASHSIZE_4MB: "y"
-      CONFIG_ESPTOOLPY_FLASHMODE_QIO: "y"
 
 psram:
   mode: octal
@@ -25,7 +26,6 @@ psram:
 logger:
   level: DEBUG
 
-# ===== WIFI =====
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
@@ -34,7 +34,6 @@ wifi:
     ssid: "${friendly_name} Hotspot"
     password: "12345678"
 
-# ===== API =====
 api:
   encryption:
     key: !secret api_encryption_key
@@ -42,13 +41,11 @@ api:
 ota:
   - platform: esphome
 
-# ===== I2S (для микрофона) =====
 i2s_audio:
   - id: i2s_bus
     i2s_lrclk_pin: GPIO41
     i2s_bclk_pin: GPIO38
 
-# ===== МИКРОФОН (PDM) =====
 microphone:
   - platform: i2s_audio
     id: mic
@@ -60,7 +57,6 @@ microphone:
     bits_per_sample: 16bit
     channel: right
 
-# ===== ДИНАМИК =====
 speaker:
   - platform: i2s_audio
     id: spk
@@ -68,8 +64,6 @@ speaker:
     i2s_dout_pin: GPIO17
     dac_type: external
 
-
-# ===== MEDIA PLAYER =====
 media_player:
   - platform: speaker
     name: "${friendly_name}"
@@ -77,11 +71,10 @@ media_player:
     announcement_pipeline:
       speaker: spk
 
-# ===== WAKE WORD =====
 micro_wake_word:
   models:
     - model: okay_nabu
-# ===== VOICE ASSISTANT =====
+
 voice_assistant:
   id: va
   microphone: mic
@@ -95,7 +88,6 @@ voice_assistant:
   on_end:
     - light.turn_off: led
 
-# ===== LED =====
 light:
   - platform: binary
     id: led
@@ -108,7 +100,6 @@ output:
     pin: GPIO2
     inverted: true
 
-# ===== (опционально) кнопка как fallback =====
 binary_sensor:
   - platform: gpio
     pin:
