@@ -23,7 +23,7 @@ psram:
   speed: 80MHz
 
 logger:
-  baud_rate: 0
+  level: DEBUG
 
 # ===== WIFI =====
 wifi:
