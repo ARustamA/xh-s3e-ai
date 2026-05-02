@@ -43,6 +43,7 @@ microphone:
     i2s_audio_id: i2s_bus
     i2s_din_pin: GPIO42
     pdm: true
+    adc_type: external
     channel: left
 
 # ===== SPEAKER =====
