@@ -54,6 +54,7 @@ speaker:
     dac_type: external
     sample_rate: 16000
     bits_per_sample: 16bit
+    channel: mono
 
 media_player:
   - platform: speaker
@@ -61,14 +62,16 @@ media_player:
     id: mp
     announcement_pipeline:
       speaker: spk
+    volume_min: 0.05
+    volume_max: 0.35
 
 voice_assistant:
   id: va
   microphone: mic
   media_player: mp
-  noise_suppression_level: 1
-  auto_gain: 31dBFS
-  volume_multiplier: 4.0
+  noise_suppression_level: 2
+  auto_gain: 10dBFS
+  volume_multiplier: 1.0
 
 binary_sensor:
   - platform: gpio
