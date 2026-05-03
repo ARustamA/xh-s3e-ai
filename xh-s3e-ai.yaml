@@ -42,7 +42,6 @@ microphone:
     i2s_audio_id: i2s_bus
     i2s_din_pin: GPIO42
     adc_type: external
-    # pdm: true
     sample_rate: 16000
     bits_per_sample: 16bit
     channel: right
@@ -77,10 +76,8 @@ voice_assistant:
   microphone: mic
   media_player: mp
   noise_suppression_level: 1
-  auto_gain: 40dBFS
+  auto_gain: 31dBFS
   volume_multiplier: 4.0
-  vad_threshold: 2
-  vad_sensitivity: 0.6
 
 binary_sensor:
   - platform: gpio
