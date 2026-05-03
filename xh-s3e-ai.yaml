@@ -91,7 +91,7 @@ micro_wake_word:
   id: mww
   models:
     - model: alexa
-      probability_cutoff: 0.65
+      probability_cutoff: 0.6
       sliding_window_size: 5
   on_wake_word_detected:
     - logger.log:
