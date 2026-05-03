@@ -33,24 +33,24 @@ ota:
 
 i2s_audio:
   - id: i2s_bus
-    i2s_lrclk_pin: GPIO41
-    i2s_bclk_pin: GPIO38
+    i2s_lrclk_pin: GPIO4
+    i2s_bclk_pin: GPIO5
 
 microphone:
   - platform: i2s_audio
     id: mic
     i2s_audio_id: i2s_bus
-    i2s_din_pin: GPIO42
+    i2s_din_pin: GPIO6
     adc_type: external
     sample_rate: 16000
-    bits_per_sample: 32bit
-    channel: right
+    bits_per_sample: 16bit   # 16 бит для совместимости с INMP441
+    channel: left            # INMP441 обычно выводит звук на левый канал
 
 speaker:
   - platform: i2s_audio
     id: spk
     i2s_audio_id: i2s_bus
-    i2s_dout_pin: GPIO17
+    i2s_dout_pin: GPIO7
     dac_type: external
     sample_rate: 16000
     bits_per_sample: 16bit
