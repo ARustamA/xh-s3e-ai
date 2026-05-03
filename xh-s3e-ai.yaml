@@ -17,7 +17,7 @@ psram:
   speed: 80MHz
 
 logger:
-  level: VERY_VERBOSE
+  level: DEBUG
 
 wifi:
   ssid: !secret wifi_ssid
@@ -77,21 +77,26 @@ voice_assistant:
   microphone: mic
   media_player: mp
   micro_wake_word: mww
-  noise_suppression_level: 2
-  auto_gain: 10dBFS
+  noise_suppression_level: 1
+  auto_gain: 15dBFS
   volume_multiplier: 1.0
   on_end:
-    - delay: 300ms
+    - delay: 500ms
     - micro_wake_word.start
   on_error:
-    - delay: 300ms
+    - delay: 500ms
     - micro_wake_word.start
     
 micro_wake_word:
   id: mww
   models:
     - model: alexa
+      probability_cutoff: 0.65
+      sliding_window_size: 5
   on_wake_word_detected:
+    - logger.log:
+        level: INFO
+        format: "Wake word detected"
     - voice_assistant.start:
         wake_word: !lambda 'return wake_word;'
         
@@ -103,8 +108,15 @@ binary_sensor:
       inverted: true
     name: "Voice Button"
     on_press:
-      - micro_wake_word.stop
-      - voice_assistant.start
+      - if:
+          condition:
+            voice_assistant.is_running:
+          then:
+            - voice_assistant.stop
+            - micro_wake_word.start
+          else:
+            - micro_wake_word.stop
+            - voice_assistant.start
 
 light:
   - platform: binary
