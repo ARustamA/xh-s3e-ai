@@ -42,10 +42,9 @@ microphone:
     i2s_audio_id: i2s_bus
     i2s_din_pin: GPIO42
     adc_type: external
-    pdm: true
     sample_rate: 16000
-    bits_per_sample: 16bit
-    channel: left
+    bits_per_sample: 32bit
+    channel: right
 
 speaker:
   - platform: i2s_audio
