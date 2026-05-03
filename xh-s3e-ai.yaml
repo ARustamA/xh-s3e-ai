@@ -92,13 +92,3 @@ output:
     id: led_out
     pin: GPIO2
     inverted: true
-
-binary_sensor:
-  - platform: gpio
-    pin:
-      number: GPIO0
-      mode: INPUT_PULLUP
-      inverted: true
-    name: "Voice Button"
-    on_press:
-      - voice_assistant.start
