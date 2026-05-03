@@ -32,14 +32,14 @@ ota:
   - platform: esphome
 
 i2s_audio:
-  - id: i2s_mic_bus
+  - id: i2s_bus
     i2s_lrclk_pin: GPIO41
     i2s_bclk_pin: GPIO38
 
 microphone:
   - platform: i2s_audio
     id: mic
-    i2s_audio_id: i2s_mic_bus
+    i2s_audio_id: i2s_bus
     i2s_din_pin: GPIO42
     adc_type: external
     pdm: true
@@ -47,10 +47,31 @@ microphone:
     bits_per_sample: 16bit
     channel: left
 
+speaker:
+  - platform: i2s_audio
+    id: spk
+    i2s_audio_id: i2s_bus
+    i2s_dout_pin: GPIO17
+    dac_type: external
+    sample_rate: 16000
+    bits_per_sample: 16bit
+
+media_player:
+  - platform: speaker
+    name: "${friendly_name}"
+    id: mp
+    announcement_pipeline:
+      speaker: spk
+
+micro_wake_word:
+  models:
+    - model: okay_nabu
+
 voice_assistant:
   id: va
   microphone: mic
-  use_wake_word: false
+  media_player: mp
+  use_wake_word: true
   noise_suppression_level: 2
   auto_gain: 31dBFS
   volume_multiplier: 4.0
@@ -58,6 +79,8 @@ voice_assistant:
     - light.turn_on: led
   on_end:
     - light.turn_off: led
+  on_idle:
+    - micro_wake_word.start:
 
 light:
   - platform: binary
