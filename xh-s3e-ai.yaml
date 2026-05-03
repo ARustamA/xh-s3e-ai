@@ -45,20 +45,8 @@ microphone:
     pdm: true
     sample_rate: 16000
     bits_per_sample: 16bit
-    channel: right
-    on_data:
-      then:
-        - lambda: |-
-            static uint32_t last_log = 0;
-            if (millis() - last_log < 500) return;
-            last_log = millis();
-            const int16_t *samples_data = reinterpret_cast<const int16_t *>(x.data());
-            size_t num_samples = x.size() / sizeof(int16_t);
-            if (num_samples == 0) return;
-            uint32_t sum = 0;
-            for (size_t i = 0; i < num_samples; i++) sum += abs(samples_data[i]);
-            float avg = (float) sum / num_samples;
-            ESP_LOGD("mic", "avg amplitude: %.2f, samples: %u", avg, (unsigned int) num_samples);
+    channel: left
+
 speaker:
   - platform: i2s_audio
     id: spk
